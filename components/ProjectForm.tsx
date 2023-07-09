@@ -2,13 +2,13 @@
 
 import Image from 'next/image';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 
 
 
 // import { categoryFilters } from '@/constant';
-// import { updateProject, createNewProject, fetchToken } from '@/lib/actions';
+import { updateProject, createNewProject, fetchToken } from '@/lib/actions';
 import { FormState, ProjectInterface, SessionInterface } from '@/common.types';
 import { handleClientScriptLoad } from 'next/script';
 import FormField from './FormField';
@@ -23,27 +23,32 @@ type Props = {
 }
 
 const ProjectForm = ({ type, session,  }: Props) => {
-    const handleFormSubmit = (e:React.FormEvent) => {
+    const router = useRouter();
+    const handleFormSubmit = async (e:React.FormEvent) => {
         e.preventDefault();
 
         setIsSubmitting(true);
-
+        const {token} = await fetchToken();
         try {
-                        if (type === "create") {
-                            // await createNewProject(form, session?.user?.id, token)
+                if (type === "create") {
+                    await createNewProject(form, session?.user?.id, token);
             
-                            // router.push("/")
-                        }
+                    router.push("/")
+                }
                         
-                        if (type === "edit") {
-                            // await updateProject(form, project?.id as string, token)
+                //if (type === "edit") {
+                    // await updateProject(form, project?.id as string, token)
             
-                            // router.push("/")
-                        }
+                    // router.push("/")
+                //}
             
-                    } catch (error) {
-                        alert(`Failed to ${type === "create" ? "create" : "edit"} a project. Try again!`);
-                    } 
+            } catch (error) {
+                    //alert(`Failed to ${type === "create" ? "create" : "edit"} a project. Try again!`);
+                    console.log(error);
+            } 
+            finally{
+                setIsSubmitting(false);
+            }
 
     };
    

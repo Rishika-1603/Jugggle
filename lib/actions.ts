@@ -1,7 +1,7 @@
 import { GraphQLClient } from "graphql-request";
 
 import { createProjectMutation, createUserMutation, deleteProjectMutation, updateProjectMutation, getProjectByIdQuery, getProjectsOfUserQuery, getUserQuery, projectsQuery } from "@/graphql";
-// import { ProjectForm } from "@/common.types";
+import { ProjectForm } from "@/common.types";
 
 const isProduction = process.env.NODE_ENV === 'production';
 const apiUrl = isProduction ? process.env.NEXT_PUBLIC_GRAFBASE_API_URL || '' : 'http://127.0.0.1:4000/graphql';
@@ -121,6 +121,51 @@ export const createUser = (name: string, email: string, avatarUrl: string) => {
   
   return makeGraphQLRequest(createUserMutation, variables);
 };
+
+
+export const fetchToken = async () => {
+   try {
+    const response = await fetch(`${serverUrl}/api/auth/token`);
+    return response.json();
+ } catch (err) {
+    throw err;
+  } 
+};
+
+
+export const uploadImage = async (imagePath: string) => {
+  try {
+    const response = await fetch(`${serverUrl}/api/upload`, {
+        method: "POST",
+        body: JSON.stringify({
+        path: imagePath,
+      }),
+    });
+    return response.json();
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const createNewProject = async (form: ProjectForm, creatorId: string, token: string) => {
+  const imageUrl = await uploadImage(form.image);
+
+  if (imageUrl.url) {
+    client.setHeader("Authorization", `Bearer ${token}`);
+
+    const variables = {
+      input: { 
+        ...form, 
+        image: imageUrl.url, 
+        createdBy: { 
+          link: creatorId 
+        }
+      }
+    };
+
+    return makeGraphQLRequest(createProjectMutation, variables);
+  }}
+
 
 // export const getUserProjects = (id: string, last?: number) => {
 //   client.setHeader("x-api-key", apiKey);
