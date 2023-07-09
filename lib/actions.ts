@@ -10,14 +10,6 @@ const serverUrl = isProduction ? process.env.NEXT_PUBLIC_SERVER_URL : 'http://lo
 
 const client = new GraphQLClient( apiUrl);
 
-// export const fetchToken = async () => {
-//   try {
-//     const response = await fetch(`${serverUrl}/api/auth/token`);
-//     return response.json();
-//   } catch (err) {
-//     throw err;
-//   }
-// };
 
 // export const uploadImage = async (imagePath: string) => {
 //   try {
@@ -41,11 +33,11 @@ const makeGraphQLRequest = async (query: string, variables = {}) => {
   }
 };
 
-// export const fetchAllProjects = (category?: string | null, endcursor?: string | null) => {
-//   client.setHeader("x-api-key", apiKey);
+export const fetchAllProjects = (category?: string | null, endcursor?: string | null) => {
+   client.setHeader("x-api-key", apiKey);
 
-//   return makeGraphQLRequest(projectsQuery, { category, endcursor });
-// };
+   return makeGraphQLRequest(projectsQuery, { category, endcursor });
+ };
 
 // export const createNewProject = async (form: ProjectForm, creatorId: string, token: string) => {
 //   const imageUrl = await uploadImage(form.image);
@@ -65,7 +57,7 @@ const makeGraphQLRequest = async (query: string, variables = {}) => {
 
 //     return makeGraphQLRequest(createProjectMutation, variables);
 //   }
-// };
+//};
 
 // export const updateProject = async (form: ProjectForm, projectId: string, token: string) => {
 //   function isBase64DataURL(value: string) {
@@ -100,10 +92,10 @@ const makeGraphQLRequest = async (query: string, variables = {}) => {
 //   return makeGraphQLRequest(deleteProjectMutation, { id });
 // };
 
-// export const getProjectDetails = (id: string) => {
-//   client.setHeader("x-api-key", apiKey);
-//   return makeGraphQLRequest(getProjectByIdQuery, { id });
-// };
+export const getProjectDetails = (id: string) => {
+  client.setHeader("x-api-key", apiKey);
+  return makeGraphQLRequest(getProjectByIdQuery, { id });
+};
 export const getUser = (email: string) => {
   client.setHeader("x-api-key", apiKey);
   return makeGraphQLRequest(getUserQuery, { email });
