@@ -5,13 +5,16 @@ import React, { ChangeEvent, FormEvent, useState } from 'react';
 // import { useRouter } from 'next/navigation';
 
 
-// import Button from './Button';
-// import CustomMenu from './CustomMenu';
+
+
 // import { categoryFilters } from '@/constant';
 // import { updateProject, createNewProject, fetchToken } from '@/lib/actions';
 import { FormState, ProjectInterface, SessionInterface } from '@/common.types';
 import { handleClientScriptLoad } from 'next/script';
 import FormField from './FormField';
+import { categoryFilters } from '@/constants';
+import CustomMenu from './CustomMenu';
+import Button from './Button';
 
 type Props = {
     type: string,
@@ -20,16 +23,68 @@ type Props = {
 }
 
 const ProjectForm = ({ type, session,  }: Props) => {
-    const handleFormSubmit = (e:React.FormEvent) => {};
-    const image=null;
-    const handleChangeImage=(e:React.ChangeEvent<HTMLInputElement>) => {};
+    const handleFormSubmit = (e:React.FormEvent) => {
+        e.preventDefault();
+
+        setIsSubmitting(true);
+
+        try {
+                        if (type === "create") {
+                            // await createNewProject(form, session?.user?.id, token)
+            
+                            // router.push("/")
+                        }
+                        
+                        if (type === "edit") {
+                            // await updateProject(form, project?.id as string, token)
+            
+                            // router.push("/")
+                        }
+            
+                    } catch (error) {
+                        alert(`Failed to ${type === "create" ? "create" : "edit"} a project. Try again!`);
+                    } 
+
+    };
+   
+
+    const handleChangeImage=(e:React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+
+        const file = e.target.files?.[0];
+
+        if (!file) return;
+
+        if (!file.type.includes('image')) {
+            return alert('Please upload an image!');
+
+         }
+
+        const reader = new FileReader();
+
+        reader.readAsDataURL(file);
+
+        reader.onload = () => {
+            const result = reader.result as string;
+
+            handleStateChange("image", result);
+        }
+
+    };
     const handleStateChange = (fieldName: string, value: string) => {
+        setForm((prevForm) => ({ ...prevForm, [fieldName]: value }))
        
     };
-    const form ={
+    const [isSubmitting,setIsSubmitting] = useState(false);
+    const [form, setForm] = useState({
+        title: '',
+        description: '',
         image:'',
-        title:'',
-    }
+        liveSiteUrl:'',
+        githubUrl:'',
+        category:'',
+
+    })
     return (
         <form
             onSubmit={handleFormSubmit}
@@ -62,7 +117,7 @@ const ProjectForm = ({ type, session,  }: Props) => {
                   placeholder="Jugggle"
                   setState={(value) => handleStateChange('title', value)}
                 />
-                {/* <FormField
+                <FormField
                   title="Description"
                   state={form.description}
                   placeholder="Javascript for beginners"
@@ -81,10 +136,24 @@ const ProjectForm = ({ type, session,  }: Props) => {
                   state={form.githubUrl}
                   placeholder="https://github.com/Rishika-1603/Jugggle"
                   setState={(value) => handleStateChange('githubUrl', value)}
-                /> */}
-                <div className="flexStart w-full">
-               <button>Create</button>
+                />
+                <CustomMenu
+                title ='Category'
+                state={form.category}
+                filters={categoryFilters}
+                setState={(value) => handleStateChange('category',value)}
+                />
+                  <div className="flexStart w-full">
+                    <Button
+                      title={isSubmitting ? `${type === "create" ? "Creating" : "Editing"}` : `${type === "create" ? "Create" : "Edit"}`}
+                      type="submit"
+                      leftIcon = {isSubmitting? "" : '/plus.svg'}
+                      isSubmitting={isSubmitting}
+                     />
+                         
+                 
             </div>
+           
         </form>
     )
 }
