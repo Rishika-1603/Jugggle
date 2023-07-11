@@ -2,7 +2,14 @@ import { ProjectInterface } from "@/common.types";
 import ProjectCard from "@/components/ProjectCard";
 
 import { fetchAllProjects } from "@/lib/actions";
-
+// type SearchParams = {
+//     category?: string | null;
+//     endcursor?: string | null;
+//   }
+  
+//   type Props = {
+//     searchParams: SearchParams
+//   }
 type ProjectSearch={
     projectSearch :{
         edges : {node: ProjectInterface} [];
@@ -11,12 +18,12 @@ type ProjectSearch={
             hasNextPage:boolean;
             startCursor : string;
             endCursor:string;
-        }
-    }
+        };
+    };
 }
 const Home = async () => {
 
-    const data= await fetchAllProjects() as ProjectSearch;
+    const data= await fetchAllProjects() as ProjectSearch
     const projectsToDisplay = data?.projectSearch?.edges || [];
 
     if (projectsToDisplay.length==0) {
@@ -33,7 +40,7 @@ const Home = async () => {
               <section className="projects-grid">
                 {projectsToDisplay.map(({node }: {node: ProjectInterface}) => (
                     <ProjectCard
-                    key={node?.id}
+                    key={`${node?.id}`}
                     id={node?.id}
                     image={node?.image}
                     title={node?.title}

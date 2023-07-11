@@ -27,7 +27,7 @@ const ProjectCard= ({id,image,title,name,avatarUrl, userId}: Props) => {
 
     return(
         <div className="flexCenter flex-col rounded-2xl drop-shadow-card"> 
-           <Link href={`/project/$(id)`} className='flexCenter group relative w-full h-full'>
+           <Link href={`/project/${id}`} className='flexCenter group relative w-full h-full'>
               <Image
                 src={image}
                 width={414}
@@ -47,14 +47,15 @@ const ProjectCard= ({id,image,title,name,avatarUrl, userId}: Props) => {
                     width={24}
                     height={24}
                     alt="Profile Image"
+                    className="rounded-full"
                     />
-                    <p className="">{name}</p>
+                    <p >{name}</p>
                 </div>
             </Link>
             <div className="flexCenter gap-3">
                 <div className="flexCenter gap-2">
                   <Image
-                    src="hearth.svg"
+                    src="/hearth.svg"
                     width={13}
                     height={12}
                     alt="heart"
@@ -63,7 +64,7 @@ const ProjectCard= ({id,image,title,name,avatarUrl, userId}: Props) => {
                 </div>
                 <div className="flexCenter gap-2">
                   <Image
-                    src="eye.svg"
+                    src="/eye.svg"
                     width={13}
                     height={12}
                     alt="eye"

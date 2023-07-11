@@ -19,7 +19,7 @@ import Button from './Button';
 type Props = {
     type: string,
     session: SessionInterface,
-    // project?: ProjectInterface
+    project?: ProjectInterface
 }
 
 const ProjectForm = ({ type, session,  }: Props) => {

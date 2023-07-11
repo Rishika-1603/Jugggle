@@ -94,7 +94,7 @@ export const authOptions: NextAuthOptions = {
         };
 
         return newSession;
-      } catch (error) {
+      } catch (error:any) {
         console.error("Error retrieving user data: ", error.message);
         return session;
       }
