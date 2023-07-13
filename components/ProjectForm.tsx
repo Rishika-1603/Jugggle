@@ -22,7 +22,7 @@ type Props = {
     project?: ProjectInterface
 }
 
-const ProjectForm = ({ type, session,  }: Props) => {
+const ProjectForm = ({ type, session, project }: Props) => {
     const router = useRouter();
     const handleFormSubmit = async (e:React.FormEvent) => {
         e.preventDefault();
@@ -36,11 +36,11 @@ const ProjectForm = ({ type, session,  }: Props) => {
                     router.push("/")
                 }
                         
-                //if (type === "edit") {
-                    // await updateProject(form, project?.id as string, token)
+                if (type === "edit") {
+                    await updateProject(form, project?.id as string, token)
             
-                    // router.push("/")
-                //}
+                    router.push("/")
+                }
             
             } catch (error) {
                     //alert(`Failed to ${type === "create" ? "create" : "edit"} a project. Try again!`);
@@ -82,12 +82,12 @@ const ProjectForm = ({ type, session,  }: Props) => {
     };
     const [isSubmitting,setIsSubmitting] = useState(false);
     const [form, setForm] = useState({
-        title: '',
-        description: '',
-        image:'',
-        liveSiteUrl:'',
-        githubUrl:'',
-        category:'',
+        title: project?.title || "",
+        description: project?.description || "",
+        image: project?.image || "",
+        liveSiteUrl: project?.liveSiteUrl || "",
+        githubUrl: project?.githubUrl || "",
+        category: project?.category || ""
 
     })
     return (
