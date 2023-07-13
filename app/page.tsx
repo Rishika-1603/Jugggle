@@ -34,15 +34,17 @@ const Home = async ({ searchParams: { category,endcursor} }: Props) => {
     const data= await fetchAllProjects(category,endcursor) as ProjectSearch
     const projectsToDisplay = data?.projectSearch?.edges || [];
 
-    if (projectsToDisplay.length==0) {
+    if (projectsToDisplay.length===0) {
+        return(
         <section className="flexStart flex-col paddings">
            <Categories/> 
-            <p className="no-result-text text-center ">
-              No courses found 💀
+            <p className="no-result-text text-center  ">
+              NO COURSES FOUND ☠️
             </p>
         </section>
+        )
     }
-    const pagination= data?.projectSearch?.pageInfo ;
+    
     return(
         <section className="flex-start flex-col paddings mb-16">
               <Categories/>
@@ -54,19 +56,20 @@ const Home = async ({ searchParams: { category,endcursor} }: Props) => {
                     image={node?.image}
                     title={node?.title}
                     name={node?.createdBy.name}
-                    avatarUrl={node?.createdBy?.avatarUrl}
-                    userId={node?.createdBy?.id}/>
+                    avatarUrl={node?.createdBy.avatarUrl}
+                    userId={node?.createdBy.id}/>
                 ))}
               </section>
              <LoadMore
-                startCursor={pagination.startCursor} 
-                endCursor={pagination.endCursor} 
-                hasPreviousPage={pagination.hasPreviousPage} 
-                hasNextPage={pagination.hasNextPage}
+               startCursor={data?.projectSearch?.pageInfo.startCursor} 
+               endCursor={data?.projectSearch?.pageInfo.endCursor} 
+               hasPreviousPage={data?.projectSearch?.pageInfo.hasPreviousPage} 
+               hasNextPage={data?.projectSearch?.pageInfo.hasNextPage}
+               //hasNextPage={data?.projectSearch?.pageInfo?.hasNextPage} same for all if you get error
             />
         </section>
             
         
     )
-}
+};
 export default Home;
