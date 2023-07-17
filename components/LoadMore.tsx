@@ -14,17 +14,6 @@ type Props = {
 const LoadMore = ({ startCursor, endCursor, hasPreviousPage, hasNextPage }: Props) => {
     const router = useRouter();
 
-    //  const handleNavigation = (direction: string) => {
-    //      const currentParams = new URLSearchParams(window.location.search);
-        
-    //      if (direction === "prev" && hasPreviousPage) {
-    //          currentParams.delete("startcursor");
-    //          currentParams.set("endcursor", endCursor);
-    //      } else if (direction === "first" && hasPreviousPage) {
-    //          currentParams.delete("endcursor");
-    //          currentParams.set("startcursor", startCursor);
-    //      }
-
     const handleNavigation = (type: string) => {
         const currentParams = new URLSearchParams(window.location.search);
         
