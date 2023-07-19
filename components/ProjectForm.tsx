@@ -32,7 +32,7 @@ const ProjectForm = ({ type, session, project }: Props) => {
     })
 
     const handleStateChange = (fieldName: keyof FormState, value: string) => {
-        setForm((prevForm) => ({ ...prevForm, [fieldName]: value }));
+        setForm((prevForm) => ({ ...prevForm, [fieldName]: value }))
        
     };
 

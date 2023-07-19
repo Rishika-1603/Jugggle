@@ -6,10 +6,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-type Props = {
-    projectId: string
-}
-const ProjectActions=({projectId}: Props) => {
+const ProjectActions=({projectId}:{projectId:string}) => {
     const router = useRouter();
     const [isDeleting, setIsDeleting] = useState(false);
     const handleDeleteProject = async () => {

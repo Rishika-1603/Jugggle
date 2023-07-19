@@ -14,4 +14,6 @@ experimental: {
     ignoreDuringBuilds: true
   }
 }
+
+
 module.exports = nextConfig

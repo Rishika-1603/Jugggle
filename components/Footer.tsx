@@ -14,10 +14,10 @@ const FooterColumn = ({title,links} : ColumnProps) => (
             {links.map((link) => <Link href="/" key ={link}>{link}</Link>)}
         </ul>
     </div>
-);
+)
 const Footer = () => {
   return (
-    <section className="flexStart footer">
+    <footer className="flexStart footer">
       <div className="flex flex-col gap-12 w-full">
         <div className="flex items-start flex-col">
             <Image
@@ -51,7 +51,7 @@ const Footer = () => {
             <span className="text-black font-semibold ">5000</span>  courses submitted
         </p>
       </div>
-    </section>
+    </footer>
   )
 }
 
